@@ -1,42 +1,67 @@
 <template>
-    <v-app>
-      <v-main>
-        <v-app-bar app color="primary">
-          <v-app-bar-nav-icon @click.stop="navigateHome" />
-          <v-toolbar-title class="ml-4">
-            Página de inicio
-          </v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-avatar class="mr-4" v-if="loggedIn">
-            {{ username.charAt(0).toUpperCase() }}
-          </v-avatar>
-          <v-btn v-if="loggedIn" @click.stop="logout" icon>
-            <v-icon>mdi-logout</v-icon>
-          </v-btn>
-        </v-app-bar>
-        <router-view></router-view> <!-- Para la navegación con Vue Router -->
-      </v-main>
-    </v-app>
+  <v-app>
+    <v-main>
+      <v-app-bar app color="primary">
+        <v-app-bar-nav-icon @click="navigateHome" />
+        <v-toolbar-title class="text-center">
+          Página de inicio
+        </v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn v-if="user" text>
+          <span class="white--text">
+            {{ user.username }}
+          </span>
+        </v-btn>
+        <v-btn v-if="user" @click.stop="logout" icon>
+          <v-icon> mdi-logout </v-icon>
+        </v-btn>
+      </v-app-bar>
+      <router-view></router-view>
+    </v-main>
+  </v-app>
 </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        loggedIn: false,
-        username: "Usuario",
-      };
+
+<script>
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      user: null,
+    };
+  },
+  async created() {
+    await this.getUser();
+  },
+  methods: {
+    async getUser() {
+      try {
+        const response = await axios.get("http://localhost:3001/auth/user", {
+          withCredentials: true,
+        });
+        this.user = response.data;
+      } catch (error) {
+        console.error("Error al obtener el usuario:", error);
+      }
     },
-    methods: {
-      navigateHome() {
-        console.log("Ir a la página de inicio");
-        // Agrega la lógica de navegación a la página de inicio
-      },
-      logout() {
-        console.log("Cerrar sesión");
-        // Agrega la lógica de cierre de sesión
-      },
+    navigateHome() {
+      this.$router.push("/");
     },
-  };
-  </script>
-  
+    async logout() {
+      try {
+        await axios.post(
+          "http://localhost:3001/auth/logout",
+          {},
+          {
+            withCredentials: true,
+          }
+        );
+        this.user = null;
+        this.$router.push("/login");
+      } catch (error) {
+        console.error("Error al cerrar sesión:", error);
+      }
+    },
+  },
+};
+</script>

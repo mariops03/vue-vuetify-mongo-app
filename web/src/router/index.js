@@ -16,18 +16,19 @@ const routes = [
                 name: "Home",
                 component: HomeView
             },
-            {
-                path: "/login",
-                name: "Login",
-                component: LoginView
-            },
-            {
-                path: "/signup",
-                name: "Signup",
-                component: SignUpView
-            },
+            
         ]
-    }
+    },
+    {
+        path: "/login",
+        name: "Login",
+        component: LoginView
+    },
+    {
+        path: "/signup",
+        name: "Signup",
+        component: SignUpView
+    },
 ]
 
 const router = createRouter({
