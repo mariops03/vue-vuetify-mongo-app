@@ -31,6 +31,13 @@
     </v-container>
     <v-row justify="center">
       <v-col cols="12" sm="8" md="4">
+        <div class="text-center text-subtitle-2">
+          <router-link to="/signup">¿No tienes cuenta? Haz click para crear una!</router-link>
+        </div>
+      </v-col>
+    </v-row>
+    <v-row justify="center">
+      <v-col cols="12" sm="8" md="4">
         <v-alert
           v-if="loginMessage"
           :type="loginMessageType"
@@ -73,7 +80,7 @@ export default {
 
         if (data.success) {
           this.showLoginMessage(data.message, "success");
-          this.$router.push("/");
+          this.$router.push({ name: "Home" });
         } else {
           this.showLoginMessage(data.message, "error");
         }

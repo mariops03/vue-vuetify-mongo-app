@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-const auth = require("../middleware/auth");
+const { auth, authAdmin } = require("../middleware/auth");
 
 router.post("/signup", async (req, res) => {
   const { username, email, password } = req.body;
@@ -51,49 +51,68 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-    const { username, password } = req.body;
-  
-    try {
-      const user = await User.findOne({ username });
-  
-      if (user) {
-        const match = await bcrypt.compare(password, user.password);
-        if (match) {
-          const token = jwt.sign(
-            {
-              _id: user._id, // Incluye el _id del usuario
-              username: user.username,
-              email: user.email,
-              role: user.role,
-            },
-            "GARNACHO",
-            { expiresIn: "30m" }
-          );
-          res.cookie("token", token, { httpOnly: true });
-          res
-            .status(200)
-            .json({ success: true, message: "Inicio de sesión exitoso" });
-        } else {
-          res
-            .status(401)
-            .json({ success: false, message: "Credenciales incorrectas" });
-        }
+  const { username, password } = req.body;
+
+  try {
+    const user = await User.findOne({ username });
+
+    if (user) {
+      const match = await bcrypt.compare(password, user.password);
+      if (match) {
+        const token = jwt.sign(
+          {
+            _id: user._id, // Incluye el _id del usuario
+            username: user.username,
+            email: user.email,
+            role: user.role,
+          },
+          "GARNACHO",
+          { expiresIn: "30m" }
+        );
+        res.cookie("token", token, { httpOnly: true });
+        res
+          .status(200)
+          .json({ success: true, message: "Inicio de sesión exitoso" });
       } else {
         res
           .status(401)
-          .json({ success: false, message: "El usuario introducido no existe" });
+          .json({ success: false, message: "Credenciales incorrectas" });
       }
-    } catch (error) {
-      console.error("Error al buscar el usuario:", error);
+    } else {
       res
-        .status(500)
-        .json({ success: false, message: "Error interno del servidor" });
+        .status(401)
+        .json({ success: false, message: "El usuario introducido no existe" });
     }
-  });
- 
+  } catch (error) {
+    console.error("Error al buscar el usuario:", error);
+    res
+      .status(500)
+      .json({ success: false, message: "Error interno del servidor" });
+  }
+});
 
-router.get('/user', auth, async (req, res) => {
-    res.send(req.user);
-  });
+router.get("/user", auth, async (req, res) => {
+  res.send(req.user);
+});
+
+router.get("/admin", auth, authAdmin, async (req, res) => {
+    if (req.user.role === "admin") {
+        res.send("Acceso concedido");
+    } else {
+        res.status(401).send("Acceso denegado");
+    }
+});
+
+router.post("/logout", auth, async (req, res) => {
+  try {
+    res.clearCookie("token");
+    res
+      .status(200)
+      .send({ success: true, message: "Sesión cerrada con éxito" });
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({ error: e.message });
+  }
+});
 
 module.exports = router;

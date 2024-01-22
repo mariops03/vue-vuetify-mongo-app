@@ -21,4 +21,29 @@ const auth = async (req, res, next) => {
   }
 };
 
-module.exports = auth;
+const authAdmin = async (req, res, next) => {
+    try {
+      const token = req.cookies.token;
+      const decoded = jwt.verify(token, 'GARNACHO');
+  
+      const user = await User.findOne({ _id: decoded._id });
+  
+      if (!user) {
+        throw new Error('Usuario no autenticado');
+      }
+  
+      if (user.role !== 'admin') {
+        throw new Error('Usuario no autorizado');
+      }
+  
+      req.token = token;
+      req.user = user;
+      next();
+    } catch (e) {
+        console.error(e);
+        res.status(401).send({ error: e.message });
+        }
+}
+
+module.exports = { auth, authAdmin };
+

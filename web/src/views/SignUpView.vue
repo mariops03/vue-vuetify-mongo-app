@@ -22,6 +22,14 @@
 
     <v-row justify="center">
       <v-col cols="12" sm="8" md="4">
+        <div class="text-center text-subtitle-2">
+          <router-link to="/login">Already have an account? Click here to login!</router-link>
+        </div>
+      </v-col>
+    </v-row>
+
+    <v-row justify="center">
+      <v-col cols="12" sm="8" md="4">
         <v-alert
           v-if="registrationMessage"
           :type="registrationMessageType"
@@ -65,6 +73,7 @@ export default {
 
         if (data.success) {
           this.showRegistrationMessage(data.message, 'success');
+          this.$router.push ({ name: 'Home' });
         } else {
           this.showRegistrationMessage(data.message, 'error');
         }
