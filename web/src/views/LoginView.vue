@@ -66,6 +66,7 @@ export default {
             username: this.username,
             password: this.password,
           }),
+          credentials: "include",
         });
 
         const data = await response.json();
