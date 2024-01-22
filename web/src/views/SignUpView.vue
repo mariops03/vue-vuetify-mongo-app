@@ -49,7 +49,7 @@ export default {
   methods: {
     async register() {
       try {
-        const response = await fetch('http://localhost:3001/api/signup', {
+        const response = await fetch('http://localhost:3001/auth/signup', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

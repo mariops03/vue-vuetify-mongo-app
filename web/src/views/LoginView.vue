@@ -57,7 +57,7 @@ export default {
   methods: {
     async login() {
       try {
-        const response = await fetch("http://localhost:3001/api/login", {
+        const response = await fetch("http://localhost:3001/auth/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -72,6 +72,7 @@ export default {
 
         if (data.success) {
           this.showLoginMessage(data.message, "success");
+          this.$router.push("/");
         } else {
           this.showLoginMessage(data.message, "error");
         }
