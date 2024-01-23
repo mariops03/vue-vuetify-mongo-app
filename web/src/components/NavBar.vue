@@ -2,13 +2,11 @@
   <v-app>
     <v-main>
       <v-app-bar app color="primary">
-        <v-btn @click="navigateHome" >
-          <div class="text-h6 font-weight-bold">
-            HOME
-          </div>
+        <v-btn icon @click="navigateHome" >
+          <v-icon>mdi-home</v-icon>
         </v-btn>
         <v-spacer></v-spacer>
-        <v-btn @click="navigateToSettings" icon>
+        <v-btn icon v-if="user && user.role === 'admin'" @click="navigateToSettings">
           <v-icon>mdi-cog</v-icon>
         </v-btn>
         <v-menu v-if="user">
