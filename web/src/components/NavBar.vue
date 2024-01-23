@@ -2,13 +2,18 @@
   <v-app>
     <v-main>
       <v-app-bar app color="primary">
-        <v-btn icon @click="navigateHome" >
+        <v-btn icon @click="navigateHome">
           <v-icon>mdi-home</v-icon>
         </v-btn>
         <v-spacer></v-spacer>
-        <v-btn icon v-if="user && user.role === 'admin'" @click="navigateToSettings">
+        <v-btn
+          icon
+          v-if="user && user.role === 'admin'"
+          @click="navigateToSettings"
+        >
           <v-icon>mdi-cog</v-icon>
         </v-btn>
+        
         <v-menu v-if="user">
           <template v-slot:activator="{ on, attrs }">
             <v-btn text v-bind="attrs" v-on="on">
@@ -25,6 +30,12 @@
         </v-menu>
         <v-btn v-if="user" @click="logout" icon>
           <v-icon>mdi-logout</v-icon>
+        </v-btn>
+        <v-btn text v-else @click="navigateToLogin">
+          <div>
+            <v-icon>mdi-account</v-icon>
+            <div>Log in</div>
+          </div>
         </v-btn>
       </v-app-bar>
       <router-view></router-view>
@@ -53,7 +64,6 @@ export default {
         this.user = response.data;
       } catch (error) {
         console.error("Error al obtener el usuario:", error);
-        this.$router.push({ name: "Login" });
       }
     },
     navigateHome() {
@@ -61,6 +71,9 @@ export default {
     },
     navigateToSettings() {
       this.$router.push({ name: "Settings" });
+    },
+    navigateToLogin() {
+      this.$router.push({ name: "Login" });
     },
     async logout() {
       try {
@@ -72,7 +85,6 @@ export default {
           }
         );
         this.user = null;
-        this.$router.push({ name: "Login"});
       } catch (error) {
         console.error("Error al cerrar sesión:", error);
       }
