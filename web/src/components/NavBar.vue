@@ -29,7 +29,6 @@
   </v-app>
 </template>
 
-
 <script>
 import axios from "axios";
 

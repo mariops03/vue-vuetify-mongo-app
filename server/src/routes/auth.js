@@ -95,24 +95,4 @@ router.get("/user", auth, async (req, res) => {
   res.send(req.user);
 });
 
-router.get("/admin", auth, authAdmin, async (req, res) => {
-    if (req.user.role === "admin") {
-        res.send("Acceso concedido");
-    } else {
-        res.status(401).send("Acceso denegado");
-    }
-});
-
-router.post("/logout", auth, async (req, res) => {
-  try {
-    res.clearCookie("token");
-    res
-      .status(200)
-      .send({ success: true, message: "Sesión cerrada con éxito" });
-  } catch (e) {
-    console.error(e);
-    res.status(500).send({ error: e.message });
-  }
-});
-
 module.exports = router;
