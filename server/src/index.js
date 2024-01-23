@@ -8,7 +8,7 @@ const port = 3001;
 require('./config/db');
 
 app.use(cors({
-  origin: 'http://localhost:3000', // reemplaza esto con la URL de tu aplicación Vue.js
+  origin: 'http://localhost:3000',
   credentials: true
 }));
 app.use(express.json());

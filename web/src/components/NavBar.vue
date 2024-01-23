@@ -8,20 +8,25 @@
           </div>
         </v-btn>
         <v-spacer></v-spacer>
-        <v-btn v-if="user && user.role === 'admin'" @click="navigateToSettings" text>
-          <div class="white--text text-h8 font-weight-bold text-uppercase">
-            CFG
-          </div>
+        <v-btn @click="navigateToSettings" icon>
+          <v-icon>mdi-cog</v-icon>
         </v-btn>
-        <v-btn v-if="user" text>
-          <div class="white--text text-h6 font-weight-bold text-uppercase">
-            {{ user.username }}
-          </div>
-        </v-btn>
-        <v-btn v-if="user" @click="logout" text>
-          <div class="white--text text-h8 font-weight-bold text-uppercase">
-            Logout
-          </div>
+        <v-menu v-if="user">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn text v-bind="attrs" v-on="on">
+              <div class="white--text text-h6 font-weight-bold text-uppercase">
+                {{ user.username }}
+              </div>
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item @click="opcion1">
+              <v-list-item-title>Opción 1</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+        <v-btn v-if="user" @click="logout" icon>
+          <v-icon>mdi-logout</v-icon>
         </v-btn>
       </v-app-bar>
       <router-view></router-view>
