@@ -23,10 +23,12 @@ const getUser = async (req, res) => {
 };
 
 const getAdmin = async (req, res) => {
-  if (req.user.role === "admin") {
-    res.send("Acceso concedido");
+  if (req.user) {
+    res.json({ 'success': true, 'role': req.user.role });
+    return;
   } else {
-    res.status(401).send("Acceso denegado");
+    res.json({ 'success': false, 'role': null });
+    return;
   }
 };
 
