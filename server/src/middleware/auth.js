@@ -100,7 +100,7 @@ const authAdmin = async (req, res, next) => {
       return res.status(401).send({ error: 'Token ha expirado' });
     }
 
-    console.error(error);
+    //console.error(error);
     res.status(401).send({ error: error.message });
   }
 }

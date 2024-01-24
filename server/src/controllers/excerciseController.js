@@ -26,17 +26,20 @@ const getExcersise = async (req, res) => {
 const createExcersise = async (req, res) => {
     try {
         const { name, muscles, description, video, image } = req.body;
-        const result = await excersisesService.createExcersise(name, muscles, description, video, image);
+        const newExcersise = await excersisesService.createExcersise(name, muscles, description, video, image);
 
-        if (result.success) {
-            res.status(201).json(result.data);
-        } else {
-            res.status(500).json({ error: result.error });
-        }
+        const responseData = {
+            name: newExcersise.name,
+            muscles: newExcersise.muscles,
+            description: newExcersise.description,
+            video: newExcersise.video,
+            image: newExcersise.image,
+        };
+
+        res.status(201).json(responseData);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 }
-
 
 module.exports = { getAllExcersises, getExcersise, createExcersise };
