@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const connection = mongoose.connect('mongodb://localhost:27017/example/vuetify-login-roles');
+const connection = mongoose.connect('mongodb://localhost:27017/vuetify-login-roles');
 
 connection.then(() => {
   console.log('Conexión exitosa a la base de datos');
