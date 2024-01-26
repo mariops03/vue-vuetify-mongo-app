@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --port 3000",
+    "start": "npm-run-all -p serve start:server",
+    "start:server": "cd ../server && npm start",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -23,7 +25,8 @@
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
-    "eslint-plugin-vue": "^8.0.3"
+    "eslint-plugin-vue": "^8.0.3",
+    "npm-run-all": "^4.1.5"
   },
   "eslintConfig": {
     "root": true,
