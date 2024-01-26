@@ -1,20 +1,17 @@
 <template>
   <div>
-    <h1>BIENVENIDO A HOME</h1>
+    <h1>EJERCICIOS DISPONIBLES</h1>
+    <v-container>
     <v-row justify="center">
       <v-col v-for="(exercise, index) in exercises" :key="index" cols="12" sm="6" md="4" lg="3" xl="2">
         <ExcersiseCardVue :exercise="exercise" />
       </v-col>
     </v-row>
     <div v-if="exercises.length === 0">No hay ejercicios disponibles.</div>
+  </v-container>
   </div>
 </template>
 
-<style scoped>
-.exercise-row {
-  margin: -8px; /* Ajusta según sea necesario */
-}
-</style>
 
 <script>
 import axios from "axios";

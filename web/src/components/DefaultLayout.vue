@@ -1,15 +1,9 @@
 <template>
-    <div>
-        <Navbar/>
-    </div>
+<div>
+    <router-view></router-view>
+</div>
 </template>
 
 <script>
-import Navbar from "./NavBar"
 
-export default {
-    components: {
-        Navbar
-    }
-}
 </script>
