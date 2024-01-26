@@ -14,11 +14,11 @@
           <v-icon>mdi-cog</v-icon>
         </v-btn>
 
-          <v-btn icon @click="toggleTheme">
-            <v-icon>{{
-              darkTheme ? "mdi-weather-sunny" : "mdi-weather-night"
-            }}</v-icon>
-          </v-btn>
+        <v-btn icon @click="toggleTheme">
+          <v-icon>{{
+            darkTheme ? "mdi-weather-sunny" : "mdi-weather-night"
+          }}</v-icon>
+        </v-btn>
 
         <v-menu v-if="user">
           <template v-slot:activator="{ on, attrs }">
@@ -45,15 +45,17 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
-import { useTheme } from 'vuetify';
+import { ref, onMounted } from "vue";
+import axios from "axios";
+import { useTheme } from "vuetify";
+import Cookies from 'js-cookie';
 
 export default {
   setup() {
     const user = ref(null);
     const theme = useTheme();
-    const darkTheme = ref(theme.value === 'dark'); // Añade esta línea
+    const darkTheme = ref(theme.global.current.value.dark);
+    
 
     const getUser = async () => {
       try {
@@ -94,11 +96,19 @@ export default {
     };
 
     const toggleTheme = () => {
-      theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
-      darkTheme.value = theme.value === 'dark';
+      theme.global.name.value = theme.global.current.value.dark ? "light" : "dark";
+      darkTheme.value = theme.global.current.value.dark;
+      Cookies.set('theme', theme.global.name.value);
     };
 
-    onMounted(getUser);
+    onMounted(() => {
+      const themeFromCookie = Cookies.get('theme');
+      if (themeFromCookie) {
+        theme.global.name.value = themeFromCookie;
+        darkTheme.value = theme.global.current.value.dark;
+      }
+      getUser();
+    });
 
     return {
       user,
@@ -107,8 +117,8 @@ export default {
       navigateToLogin,
       logout,
       toggleTheme,
-      darkTheme // Añade esta línea
+      darkTheme,
     };
-  }
+  },
 };
 </script>
