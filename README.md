@@ -1,24 +1,48 @@
-# vuetify-login-roles
+# Vue Vuetify Mongo App
 
-## Project setup
+This is a project created with Vue.js, Vuetify, and MongoDB.
+
+## Project Setup
+
+To set up the project on your local machine, follow these steps:
+
+1. **Clone the Repository**
+
+First, you need to clone the repository to your local machine. You can do this using the following command in your terminal:
+
 ```
-npm install
+git clone https://github.com/mariops03/vue_vuetify_mongo_app.git
 ```
 
-### Compiles and hot-reloads for development
+2. **Install Web Dependencies**
+
+Once you've cloned the repository, navigate to the project directory and install the necessary dependencies with the following command:
+
 ```
-npm run serve
+cd web npm install
 ```
 
-### Compiles and minifies for production
+3. **Install Server Dependencies**
+
+Stay in the same directory and install the necessary server dependencies with the following command:
+
 ```
-npm run build
+cd ../server npm install
 ```
 
-### Lints and fixes files
+## Development
+
+To compile and hot-reload for development, run:
+```
+npm run start
+```
+
+This command will start both the server and the web application. The server will be started with `node src/index.js` in the `server` directory, and the web application will be started with `npm run serve` in the `web` directory.
+
+
+## Linting
+
+To lint and fix files, run:
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
