@@ -1,4 +1,4 @@
-const Excersises = require("../models/excersises.models");
+const Excersises = require('../models/excersises.models');
 
 const getAllExcersises = async () => {
   return await Excersises.find();
@@ -8,13 +8,20 @@ const getExcersise = async (id) => {
   return await Excersises.findById(id);
 };
 
-const createExcersise = async (name, muscles, description, video, image) => {
+const createExcersise = async (name, force, level, mechanic, equipment, primaryMuscles, secondaryMuscles, instructions, category, images) => {
+  const id = name.replace(/ /g, '_');
   const newExcersise = new Excersises({
     name,
-    muscles,
-    description,
-    video,
-    image
+    force,
+    level,
+    mechanic,
+    equipment,
+    primaryMuscles,
+    secondaryMuscles,
+    instructions,
+    category,
+    images,
+    id
   });
 
   return await newExcersise.save();

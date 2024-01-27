@@ -3,8 +3,8 @@
     <h1>EJERCICIOS DISPONIBLES</h1>
     <v-container>
     <v-row justify="center">
-      <v-col v-for="(exercise, index) in exercises" :key="index" cols="12" sm="6" md="4" lg="3" xl="2">
-        <ExcersiseCardVue :exercise="exercise" />
+      <v-col v-for="(exercise, index) in exercises.slice(0,20)" :key="index" cols="12" sm="6" md="4" lg="3" xl="3">
+        <ExcersiseCardVue :exercise="exercise" class="ma-1"/>
       </v-col>
     </v-row>
     <div v-if="exercises.length === 0">No hay ejercicios disponibles.</div>

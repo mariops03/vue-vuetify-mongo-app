@@ -25,15 +25,21 @@ const getExcersise = async (req, res) => {
 
 const createExcersise = async (req, res) => {
     try {
-        const { name, muscles, description, video, image } = req.body;
-        const newExcersise = await excersisesService.createExcersise(name, muscles, description, video, image);
+        const { name, force, level, mechanic, equipment, primaryMuscles, secondaryMuscles, instructions, category, images } = req.body;
+        const newExcersise = await excersisesService.createExcersise(name, force, level, mechanic, equipment, primaryMuscles, secondaryMuscles, instructions, category, images);
 
         const responseData = {
             name: newExcersise.name,
-            muscles: newExcersise.muscles,
-            description: newExcersise.description,
-            video: newExcersise.video,
-            image: newExcersise.image,
+            force: newExcersise.force,
+            level: newExcersise.level,
+            mechanic: newExcersise.mechanic,
+            equipment: newExcersise.equipment,
+            primaryMuscles: newExcersise.primaryMuscles,
+            secondaryMuscles: newExcersise.secondaryMuscles,
+            instructions: newExcersise.instructions,
+            category: newExcersise.category,
+            images: newExcersise.images,
+            id: newExcersise.id
         };
 
         res.status(201).json(responseData);
