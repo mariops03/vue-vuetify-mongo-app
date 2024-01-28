@@ -68,6 +68,11 @@
                     {{ exercise.secondaryMuscles.join(", ") }}
                   </div>
                   <div><strong>Category:</strong> {{ exercise.category }}</div>
+                  <v-btn text variant="outlined" class="my-2" @click="toggleImageRotation">
+                    <v-icon>
+                        mdi-dumbbell
+                    </v-icon>
+                  </v-btn>
                 </div>
             </v-col>
           </v-row>
@@ -108,6 +113,7 @@ export default {
     return {
       currentImageIndex: 0,
       imageInterval: null,
+      rotationPaused: true,
     };
   },
   computed: {
@@ -117,9 +123,7 @@ export default {
     },
     currentImage() {
       if (this.exercise && this.exercise.images.length > 0) {
-        return `https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/${
-          this.exercise.images[this.currentImageIndex]
-        }`;
+        return `https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/${this.exercise.images[this.currentImageIndex]}`;
       } else {
         return "";
       }
@@ -145,15 +149,22 @@ export default {
         this.currentImageIndex =
           (this.currentImageIndex + 1) % this.exercise.images.length;
       }
-    },capitalizeFirstLetter(str) {
-      return str.charAt(0).toUpperCase() + str.slice(1);
-    },    
+    },
+    toggleImageRotation() {
+      if (this.rotationPaused) {
+        this.imageInterval = setInterval(() => {
+          this.changeImage();
+        }, 1500);
+      } else {
+        clearInterval(this.imageInterval);
+      }
+      this.rotationPaused = !this.rotationPaused;
+    },
   },
 };
 </script>
 
 <style scoped>
-
 .details {
   margin-top: 20px;
   text-align: left;
@@ -162,7 +173,6 @@ export default {
 .difficulty {
   display: flex;
   align-items: center;
-  
 }
 
 .instructions {
@@ -170,6 +180,8 @@ export default {
 }
 
 .instruction {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+  text-align: left;
+  font-size: medium;
 }
 </style>
