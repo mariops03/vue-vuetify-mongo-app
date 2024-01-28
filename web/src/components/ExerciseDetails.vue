@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row v-if="exercise">
+    <v-row v-if="exercise" justify="center">
       <v-col cols="12" sm="10" md="8" lg="6">
         <v-card>
           <v-card-title
