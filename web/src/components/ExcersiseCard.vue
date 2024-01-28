@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="ma-4">
     <div>
       <v-expand-transition>
         <v-card style="width: 100%; height: 100%; border-radius: 15px; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: transform .2s;">
@@ -17,7 +17,7 @@
           <v-divider></v-divider>
 
           <router-link :to="`/exercise/${exercise.id}`" class="no-underline">
-            <v-card-title class="font-weight-bold red--text no-underline primary--text" @click="selectExercise">{{ exercise.name }}</v-card-title>
+            <v-card-title class="font-weight-bold no-underline primary--text" @click="selectExercise">{{ exercise.name }}</v-card-title>
           </router-link>
 
         </v-card>

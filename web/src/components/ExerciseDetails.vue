@@ -1,124 +1,175 @@
 <template>
-    <v-container v-if="exercise" class="exercise-details">
-      <v-row>
-        <v-col>
-          <v-card>
-            <v-card-title class="headline">{{ exercise.name }}</v-card-title>
-            <v-card-text>
-              <v-row>
-                <v-col>
-                  <v-list>
-                    <v-list-item>
-                      <v-list-item-content>
-                        <v-list-item-title><strong>Force:</strong> {{ exercise.force }}</v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item>
-                      <v-list-item-content>
-                        <v-list-item-title><strong>Level:</strong> {{ exercise.level }}</v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item v-if="exercise.mechanic">
-                      <v-list-item-content>
-                        <v-list-item-title><strong>Mechanic:</strong> {{ exercise.mechanic }}</v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item>
-                      <v-list-item-content>
-                        <v-list-item-title><strong>Equipment:</strong> {{ exercise.equipment }}</v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item>
-                      <v-list-item-content>
-                        <v-list-item-title><strong>Primary Muscles:</strong> {{ exercise.primaryMuscles.join(', ') }}</v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item v-if="exercise.secondaryMuscles">
-                      <v-list-item-content>
-                        <v-list-item-title><strong>Secondary Muscles:</strong> {{ exercise.secondaryMuscles.join(', ') }}</v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item>
-                      <v-list-item-content>
-                        <v-list-item-title><strong>Instructions:</strong></v-list-item-title>
-                        <v-list-item-subtitle>
-                          <v-row>
-                            <v-col v-for="(instruction, index) in exercise.instructions" :key="index" class="mb-2">
-                              {{ index + 1 }}. {{ instruction }}
-                            </v-col>
-                          </v-row>
-                        </v-list-item-subtitle>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item>
-                      <v-list-item-content>
-                        <v-list-item-title><strong>Category:</strong> {{ exercise.category }}</v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item v-if="exercise.images.length" style="width: 1000px;" class="align-center justify-center" >
-                      <v-list-item-content>
-                        <v-list-item-title><strong>Images:</strong></v-list-item-title>
-                        <v-row>
-                          <v-col>
-                            <v-img :src="currentImage" alt="Exercise Image" aspect-ratio="1.5"></v-img>
-                          </v-col>
-                        </v-row>
-                      </v-list-item-content>
-                    </v-list-item>
-                  </v-list>
-                </v-col>
-              </v-row>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-    <v-container v-else>
-      <v-alert type="error">Acceso denegado</v-alert>
-    </v-container>
-  </template>
-  
-  <script>
-  import { useExercisesStore } from '../store/exercises';
+  <v-container>
+    <v-row v-if="exercise">
+      <v-col cols="12" sm="10" md="8" lg="6">
+        <v-card>
+          <v-card-title
+            class="font-weight-bold ma-4"
+            style="font-size: xx-large"
+            >{{ exercise.name }}</v-card-title
+          >
+          <v-row class="ma-4" >
+            <v-col cols="12" md="6">
+              <v-img :src="currentImage" aspect-ratio="1.5"></v-img>
+            </v-col>
 
-  export default {
-    data() {
-      return {
-        currentImageIndex: 0,
-        imageInterval: null
-      };
+            <v-col cols="12" md="6">
+                <div class="details">
+                  <div class="difficulty">
+                    <strong class="mr-1">Level:</strong>
+                    <template v-if="exercise.level === 'beginner'">
+                      <v-icon :color="difficultyColor">
+                        mdi-star
+                      </v-icon>
+                    </template>
+                    <template v-else-if="exercise.level === 'intermediate'">
+                      <v-icon
+                        v-for="n in 2"
+                        :key="n"
+                        :color="difficultyColor"
+                        height="14"
+                        rounded
+                      >
+                        mdi-star
+                      </v-icon>
+                    </template>
+                    <template v-else>
+                      <v-icon
+                        v-for="n in 3"
+                        :key="n"
+                        :color="difficultyColor"
+                        height="14"
+                        rounded
+                      >
+                        mdi-star
+                      </v-icon>
+                    </template>
+                  </div>
+                  <div v-if="exercise.force">
+                    <strong>Force:</strong> {{ exercise.force }}
+                  </div>
+                  <div v-if="exercise.mechanic">
+                    <strong>Mechanic:</strong> {{ exercise.mechanic }}
+                  </div>
+                  <div v-if="exercise.equipment">
+                    <strong>Equipment:</strong> {{ exercise.equipment }}
+                  </div>
+                  <div>
+                    <strong>Primary Muscles:</strong>
+                    {{ exercise.primaryMuscles.join(", ") }}
+                  </div>
+                  <div
+                    v-if="
+                      exercise.secondaryMuscles &&
+                      exercise.secondaryMuscles.length > 0
+                    "
+                  >
+                    <strong>Secondary Muscles:</strong>
+                    {{ exercise.secondaryMuscles.join(", ") }}
+                  </div>
+                  <div><strong>Category:</strong> {{ exercise.category }}</div>
+                </div>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row v-if="exercise" justify="center">
+      <v-col cols="12" sm="10" md="8" lg="6">
+        <v-card>
+          <v-card-title
+            class="font-weight-bold ma-4"
+            style="font-size: xx-large"
+            >Instructions</v-card-title
+          >
+          <v-card-text>
+            <div class="instructions">
+              <div
+                v-for="(instruction, index) in exercise.instructions"
+                :key="index"
+                class="instruction"
+              >
+                {{ index + 1 }}. {{ instruction }}
+              </div>
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-alert v-else type="error">Acceso denegado</v-alert>
+  </v-container>
+</template>
+
+<script>
+import { useExercisesStore } from "../store/exercises";
+
+export default {
+  data() {
+    return {
+      currentImageIndex: 0,
+      imageInterval: null,
+    };
+  },
+  computed: {
+    exercise() {
+      const exerciseStore = useExercisesStore();
+      return exerciseStore.getCurrentExercise;
     },
-    computed: {
-      exercise() {
-        const exerciseStore = useExercisesStore();
-        return exerciseStore.getCurrentExercise;
-      },
-      currentImage() {
-        if (this.exercise && this.exercise.images.length > 0) {
-          return `https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/${this.exercise.images[this.currentImageIndex]}`;
-        } else {
-          return '';
-        }
+    currentImage() {
+      if (this.exercise && this.exercise.images.length > 0) {
+        return `https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/${
+          this.exercise.images[this.currentImageIndex]
+        }`;
+      } else {
+        return "";
       }
     },
-    methods: {
-        changeImage() {
-  if (this.exercise && this.exercise.images && this.exercise.images.length > 0) {
-    this.currentImageIndex = (this.currentImageIndex + 1) % this.exercise.images.length;
-  }
-},
-
-    },
-    watch: {
-      exercise: {
-        handler() {
-          if (this.imageInterval) {
-            clearInterval(this.imageInterval);
-          }
-          this.imageInterval = setInterval(this.changeImage, 2000);
-        },
-        immediate: true
+    difficultyColor() {
+      switch (this.exercise.level) {
+        case "beginner":
+          return "green darken-2";
+        case "intermediate":
+          return "orange darken-2";
+        default:
+          return "red darken-2";
       }
-    }
-  };
+    },
+  },
+  methods: {
+    changeImage() {
+      if (
+        this.exercise &&
+        this.exercise.images &&
+        this.exercise.images.length > 0
+      ) {
+        this.currentImageIndex =
+          (this.currentImageIndex + 1) % this.exercise.images.length;
+      }
+    },capitalizeFirstLetter(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    },    
+  },
+};
 </script>
+
+<style scoped>
+
+.details {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.difficulty {
+  display: flex;
+  align-items: center;
+  
+}
+
+.instructions {
+  margin-top: 10px;
+}
+
+.instruction {
+  margin-bottom: 5px;
+}
+</style>
