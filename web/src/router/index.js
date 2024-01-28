@@ -4,6 +4,7 @@ import SignUpView from "../views/SignUpView.vue";
 import DefaultLayout from "../components/DefaultLayout.vue";
 import HomeView from "../views/HomeView.vue";
 import SettingsView from "../views/SettingsView.vue";
+import ExerciseDetails from "../components/ExerciseDetails.vue";
 import Axios from "axios";
 
 const router = createRouter({
@@ -26,6 +27,11 @@ const router = createRouter({
             requiresAuth: true,
             requiredRoles: ['admin'],
           },
+        },
+        {
+          path: "/exercise/:id",
+          name: "Exercise",
+          component: ExerciseDetails,
         },
       ],
     },
@@ -54,21 +60,17 @@ router.beforeEach(async (to, from, next) => {
         const response = await Axios.get("http://localhost:3001/auth/user", {
           withCredentials: true,
         });
-  
         const user = response.data;
         const roles = to.meta.requiredRoles;
   
         if (roles && user && roles.includes(user.role)) {
-          // Si el usuario está autenticado y tiene los roles necesarios, permite el acceso
           next();
         } else {
-          // Si no tiene los permisos necesarios, redirige a la página de inicio
           console.error("No tiene los permisos necesarios");
           router.replace({ name: "Home" });
         }
       } catch (error) {
         console.error("Error al verificar la autenticación:", error);
-        // Si hay un error, redirige a la página de inicio de sesión
         router.replace({ name: "Login" });
       }
     } else if (to.meta.requiresAuth === false) {
@@ -76,21 +78,16 @@ router.beforeEach(async (to, from, next) => {
         const response = await Axios.get("http://localhost:3001/auth/user", {
           withCredentials: true,
         });
-  
-        // Si el usuario está autenticado, redirige a la página de inicio
         if (response.data) {
           router.replace({ name: "Home" });
         } else {
-          // Si el usuario no está autenticado, permite el acceso a las rutas de inicio de sesión y registro
           next();
         }
       } catch (error) {
         console.error("Error al verificar la autenticación:", error);
-        // En caso de error, permite el acceso a las rutas de inicio de sesión y registro
         next();
       }
     } else {
-      // Si la ruta no requiere autenticación, permite el acceso
       next();
     }
   });

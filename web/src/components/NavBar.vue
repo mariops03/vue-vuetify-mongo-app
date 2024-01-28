@@ -49,13 +49,14 @@ import { ref, onMounted } from "vue";
 import axios from "axios";
 import { useTheme } from "vuetify";
 import Cookies from 'js-cookie';
+import { useRouter } from "vue-router";
 
 export default {
   setup() {
     const user = ref(null);
     const theme = useTheme();
     const darkTheme = ref(theme.global.current.value.dark);
-    
+    const router = useRouter();    
 
     const getUser = async () => {
       try {
@@ -69,15 +70,15 @@ export default {
     };
 
     const navigateHome = () => {
-      this.$router.push({ name: "Home" });
+      router.push({ name: "Home" });
     };
 
     const navigateToSettings = () => {
-      this.$router.push({ name: "Settings" });
+      router.push({ name: "Settings" });
     };
 
     const navigateToLogin = () => {
-      this.$router.push({ name: "Login" });
+      router.push({ name: "Login" });
     };
 
     const logout = async () => {
