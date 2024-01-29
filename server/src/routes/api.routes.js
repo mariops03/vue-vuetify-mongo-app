@@ -13,12 +13,14 @@ const {
   getExcersisesByPrimaryMuscle,
   getExcersisesBySecondaryMuscle,
 } = require("../controllers/excerciseController");
+const { auth } = require("../middleware/auth");
+const { authAdmin } = require("../middleware/auth");
 
 const router = express.Router();
 
 router.get("/getExcersises", getAllExcersises);
 router.get("/getExcersise/:id", getExcersise);
-router.post("/createExcersise", createExcersise);
+router.post("/createExcersise", createExcersise, auth, authAdmin);
 router.get("/getRandomExcersise/:n", getRandomExcersises);
 router.get("/getExcersiseByName/:name", getExcersiseByName);
 router.get("/getExcersisesByForce/:force/", getExcersisesByForce);

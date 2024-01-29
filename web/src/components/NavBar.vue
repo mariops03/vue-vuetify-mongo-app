@@ -23,6 +23,7 @@
           }}</v-icon>
         </v-btn>
 
+
         <v-menu v-if="user">
           <template v-slot:activator="{ on, attrs }">
             <v-btn text v-bind="attrs" v-on="on">
@@ -40,6 +41,9 @@
             <v-icon>mdi-account</v-icon>
             <div>Log in</div>
           </div>
+        </v-btn>
+        <v-btn v-if="user && user.role === 'admin'" icon @click="navigateAddView">
+          <v-icon>mdi-plus-thick</v-icon>
         </v-btn>
         <v-dialog v-model="searchDialog" persistent max-width="600">
           <v-card>
@@ -105,6 +109,10 @@ export default {
       router.push({ name: "Login" });
     };
 
+    const navigateAddView = () => {
+      router.push({ path: "/addExercise" });
+    };
+
     const logout = async () => {
       try {
         await axios.post(
@@ -167,6 +175,7 @@ export default {
       navigateHome,
       navigateToSettings,
       navigateToLogin,
+      navigateAddView,
       logout,
       toggleTheme,
       darkTheme,

@@ -6,6 +6,7 @@ import HomeView from "../views/HomeView.vue";
 import SettingsView from "../views/SettingsView.vue";
 import ExerciseDetails from "../components/ExerciseDetails.vue";
 import SearchView from "../views/SearchView.vue";
+import AddView from "../views/AddView.vue";
 import Axios from "axios";
 
 const router = createRouter({
@@ -40,6 +41,15 @@ const router = createRouter({
           component: SearchView,
           props: true,
         },
+        {
+          path: "/addExercise",
+          name: "addExercise",
+          component: AddView,
+          meta: {
+            requiresAuth: true,
+            requiredRoles: ['admin'],
+          },
+        }
       ],
     },
     {

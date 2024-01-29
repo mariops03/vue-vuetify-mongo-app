@@ -136,23 +136,29 @@ const createExcersise = async (req, res) => {
       mechanic,
       equipment,
       primaryMuscles,
-      secondaryMuscles,
       instructions,
       category,
       images,
+      secondaryMuscles
     } = req.body;
-    const newExcersise = await excersisesService.createExcersise(
+
+    const newExcersiseData = {
       name,
       force,
       level,
       mechanic,
       equipment,
       primaryMuscles,
-      secondaryMuscles,
       instructions,
       category,
       images
-    );
+    };
+
+    if (secondaryMuscles != null) {
+      newExcersiseData.secondaryMuscles = secondaryMuscles;
+    }
+
+    const newExcersise = await excersisesService.createExcersise(newExcersiseData);
 
     const responseData = {
       name: newExcersise.name,
@@ -173,6 +179,7 @@ const createExcersise = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 module.exports = {
   getAllExcersises,

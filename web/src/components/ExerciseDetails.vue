@@ -68,7 +68,7 @@
                     {{ exercise.secondaryMuscles.join(", ") }}
                   </div>
                   <div><strong>Category:</strong> {{ exercise.category }}</div>
-                  <v-btn text variant="outlined" class="my-2" @click="toggleImageRotation">
+                  <v-btn v-if="exercise.images.length == 2" text variant="outlined" class="my-2" @click="toggleImageRotation">
                     <v-icon>
                         mdi-dumbbell
                     </v-icon>
