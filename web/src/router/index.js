@@ -5,6 +5,7 @@ import DefaultLayout from "../components/DefaultLayout.vue";
 import HomeView from "../views/HomeView.vue";
 import SettingsView from "../views/SettingsView.vue";
 import ExerciseDetails from "../components/ExerciseDetails.vue";
+import SearchView from "../views/SearchView.vue";
 import Axios from "axios";
 
 const router = createRouter({
@@ -32,6 +33,11 @@ const router = createRouter({
           path: "/exercise/:id",
           name: "Exercise",
           component: ExerciseDetails,
+        },
+        {
+          path: "/search",
+          name: "Search",
+          component: SearchView,
         },
       ],
     },

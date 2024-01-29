@@ -6,6 +6,9 @@
           <v-icon>mdi-home</v-icon>
         </v-btn>
         <v-spacer></v-spacer>
+        <v-btn icon @click="toggleSearch">
+          <v-icon>mdi-magnify</v-icon>
+        </v-btn>
         <v-btn
           icon
           v-if="user && user.role === 'admin'"
@@ -38,6 +41,23 @@
             <div>Log in</div>
           </div>
         </v-btn>
+        <v-dialog v-model="searchDialog" persistent max-width="600">
+          <v-card>
+            <v-card-title>Buscar ejercicios</v-card-title>
+            <v-card-text>
+              <v-text-field
+                v-model="searchQuery"
+                label="Buscar ejercicios"
+                clearable
+                solo-inverted
+              ></v-text-field>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn text @click="searchExercises">Buscar</v-btn>
+              <v-btn text @click="closeSearchDialog">Cancelar</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </v-app-bar>
       <router-view></router-view>
     </v-main>
@@ -48,7 +68,7 @@
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import { useTheme } from "vuetify";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 import { useRouter } from "vue-router";
 
 export default {
@@ -56,7 +76,9 @@ export default {
     const user = ref(null);
     const theme = useTheme();
     const darkTheme = ref(theme.global.current.value.dark);
-    const router = useRouter();    
+    const router = useRouter();
+    const searchDialog = ref(false);
+    const searchQuery = ref("");
 
     const getUser = async () => {
       try {
@@ -97,13 +119,40 @@ export default {
     };
 
     const toggleTheme = () => {
-      theme.global.name.value = theme.global.current.value.dark ? "light" : "dark";
+      theme.global.name.value = theme.global.current.value.dark
+        ? "light"
+        : "dark";
       darkTheme.value = theme.global.current.value.dark;
-      Cookies.set('theme', theme.global.name.value);
+      Cookies.set("theme", theme.global.name.value);
+    };
+
+    const toggleSearch = () => {
+      searchDialog.value = !searchDialog.value;
+    };
+
+    const closeSearchDialog = () => {
+      searchDialog.value = false;
+    };
+
+    const searchExercises = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3001/api/v1/getExcersiseByName/${searchQuery.value}`,
+          {
+            withCredentials: true,
+          }
+        );
+        const exercises = response.data;
+        console.log("Exercises:", exercises);
+        router.push({ name: "Search" });
+        closeSearchDialog();
+      } catch (error) {
+        console.error("Error searching exercises:", error.message);
+      }
     };
 
     onMounted(() => {
-      const themeFromCookie = Cookies.get('theme');
+      const themeFromCookie = Cookies.get("theme");
       if (themeFromCookie) {
         theme.global.name.value = themeFromCookie;
         darkTheme.value = theme.global.current.value.dark;
@@ -119,6 +168,11 @@ export default {
       logout,
       toggleTheme,
       darkTheme,
+      searchDialog,
+      searchQuery,
+      toggleSearch,
+      closeSearchDialog,
+      searchExercises,
     };
   },
 };
