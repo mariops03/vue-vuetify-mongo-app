@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 export const useExercisesStore = defineStore({
   id: 'exercises',
   state: () => ({
-    currentExercise: JSON.parse(localStorage.getItem('currentExercise')) || null,
+    currentExercise: null,
     searchedExercsises: [],
   }),
   getters: {
@@ -14,9 +14,8 @@ export const useExercisesStore = defineStore({
     updateCurrentExercise(exercise) {
       if (exercise !== undefined && exercise !== null) {
         this.currentExercise = exercise;
-        localStorage.setItem('currentExercise', JSON.stringify(exercise));
       } else {
-        console.error('Se intentó almacenar un ejercicio no válido en localStorage');
+        console.error('Se intentó almacenar un ejercicio no válido en el store');
       }
     },
     updateSearchedExercises(exercises) {
@@ -28,4 +27,5 @@ export const useExercisesStore = defineStore({
       }
     },
   },
+  persist: true,
 });
