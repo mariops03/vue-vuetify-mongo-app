@@ -35,9 +35,10 @@ const router = createRouter({
           component: ExerciseDetails,
         },
         {
-          path: "/search",
+          path: "/search/:query",
           name: "Search",
           component: SearchView,
+          props: true,
         },
       ],
     },

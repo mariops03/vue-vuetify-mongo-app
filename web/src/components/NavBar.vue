@@ -70,6 +70,7 @@ import axios from "axios";
 import { useTheme } from "vuetify";
 import Cookies from "js-cookie";
 import { useRouter } from "vue-router";
+import { useExercisesStore } from "../store/exercises";
 
 export default {
   setup() {
@@ -79,6 +80,7 @@ export default {
     const router = useRouter();
     const searchDialog = ref(false);
     const searchQuery = ref("");
+    const exercisesStore = useExercisesStore();
 
     const getUser = async () => {
       try {
@@ -143,8 +145,8 @@ export default {
           }
         );
         const exercises = response.data;
-        console.log("Exercises:", exercises);
-        router.push({ name: "Search" });
+        exercisesStore.updateSearchedExercises(exercises);
+        router.push({ name: "Search", params: { query: searchQuery.value } });
         closeSearchDialog();
       } catch (error) {
         console.error("Error searching exercises:", error.message);

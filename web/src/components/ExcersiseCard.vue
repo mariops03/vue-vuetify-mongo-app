@@ -17,7 +17,7 @@
           <v-divider></v-divider>
 
           <router-link :to="`/exercise/${exercise.id}`" class="no-underline">
-            <v-card-title class="font-weight-bold no-underline primary--text" @click="selectExercise">{{ exercise.name }}</v-card-title>
+            <v-card-title style="font-size: xlarge;" class="font-weight-bold no-underline primary--text" @click="selectExercise">{{ exercise.name }}</v-card-title>
           </router-link>
 
         </v-card>
