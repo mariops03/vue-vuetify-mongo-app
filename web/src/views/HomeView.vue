@@ -1,25 +1,43 @@
 <template>
-  <div>
-    <h1>EJERCICIOS DISPONIBLES</h1>
-    <v-container class="pa-5">
+  <div class="exercise-container">
+    <h1>EJERCICIOS ALEATORIOS</h1>
+    <v-container>
       <div v-if="isLoading">Cargando ejercicios...</div>
-      <v-row v-else justify="center">
-        <v-col v-for="(exercise, index) in exercises.slice(0,20)" :key="index" cols="12" sm="6" md="4" lg="3">
-          <ExcersiseCardVue :exercise="exercise"/>
-        </v-col>
-      </v-row>
-      <div v-if="exercises.length === 0 && !isLoading">No hay ejercicios disponibles.</div>
+      <v-carousel v-if="!isLoading && exercises.length > 0" hide-delimiters class="mx-auto" style="width: 675px; ">
+        <v-carousel-item
+          v-for="(exercise, index) in exercises"
+          :key="index"
+          reverse-transition="fade-transition"
+          transition="fade-transition"
+        >
+          <router-link :to="`/exercise/${exercise.id}`" class="no-underline" @click="updateCurrentExercise(exercise)">
+            <v-card variant="flat">
+              <v-img
+                v-if="exercise && exercise.images && exercise.images.length"
+                :src="`https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/${exercise.images[0]}`"
+                :alt="exercise.name"
+                height="450px"
+              ></v-img>
+              <v-card-title class="white--text font-weight-bold">{{ exercise.name }}</v-card-title>
+            </v-card>
+          </router-link>
+        </v-carousel-item>
+      </v-carousel>
+      <div v-if="exercises.length === 0 && !isLoading">
+        No hay ejercicios disponibles.
+      </div>
     </v-container>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import ExcersiseCardVue from '../components/ExcersiseCard.vue';
+import ExcersiseCardVue from "../components/ExcersiseCard.vue";
+import { useExercisesStore } from "../store/exercises";
 
 export default {
   components: {
-    ExcersiseCardVue
+    ExcersiseCardVue,
   },
   data() {
     return {
@@ -30,9 +48,13 @@ export default {
   async mounted() {
     try {
       this.isLoading = true;
-      const response = await axios.get("http://localhost:3001/api/v1/getExcersises", {
-        withCredentials: true,
-      });
+      const n = 5;
+      const response = await axios.get(
+        `http://localhost:3001/api/v1/getRandomExcersise/${n}`,
+        {
+          withCredentials: true,
+        }
+      );
       this.exercises = response.data;
     } catch (error) {
       console.error("Error al obtener los ejercicios:", error.message);
@@ -40,5 +62,23 @@ export default {
       this.isLoading = false;
     }
   },
+  methods: {
+    updateCurrentExercise(exercise) {
+      const exerciseStore = useExercisesStore();
+      exerciseStore.updateCurrentExercise(exercise);
+    },
+  }
 };
 </script>
+
+<style scoped>
+.exercise-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.no-underline {
+  text-decoration: none !important;
+  color: var(--v-primary-base) !important;
+}
+</style>

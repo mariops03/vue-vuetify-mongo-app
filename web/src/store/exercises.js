@@ -10,8 +10,12 @@ export const useExercisesStore = defineStore({
   },
   actions: {
     updateCurrentExercise(exercise) {
-      this.currentExercise = exercise;
-      localStorage.setItem('currentExercise', JSON.stringify(exercise));
+      if (exercise !== undefined && exercise !== null) {
+        this.currentExercise = exercise;
+        localStorage.setItem('currentExercise', JSON.stringify(exercise));
+      } else {
+        console.error('Se intentó almacenar un ejercicio no válido en localStorage');
+      }
     },
   },
 });

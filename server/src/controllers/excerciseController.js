@@ -23,6 +23,16 @@ const getExcersise = async (req, res) => {
     }
 }
 
+const getRandomExcersises = async (req, res) => {
+    try {
+        const { n } = req.params;
+        const excersises = await excersisesService.getRandomExcersises(n);
+        res.json(excersises);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
 const createExcersise = async (req, res) => {
     try {
         const { name, force, level, mechanic, equipment, primaryMuscles, secondaryMuscles, instructions, category, images } = req.body;
@@ -48,4 +58,4 @@ const createExcersise = async (req, res) => {
     }
 }
 
-module.exports = { getAllExcersises, getExcersise, createExcersise };
+module.exports = { getAllExcersises, getExcersise, createExcersise, getRandomExcersises };
