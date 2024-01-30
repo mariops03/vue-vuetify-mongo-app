@@ -127,6 +127,20 @@ const getExcersisesBySecondaryMuscle = async (req, res) => {
   }
 };
 
+const deleteExcersise = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const excersise = await excersisesService.deleteExcersise(id);
+    if (excersise) {
+      res.json(excersise);
+    } else {
+      res.status(404).json({ error: "Excersise not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 const createExcersise = async (req, res) => {
   try {
     const {
@@ -139,10 +153,11 @@ const createExcersise = async (req, res) => {
       instructions,
       category,
       images,
-      secondaryMuscles
+      secondaryMuscles,
+      id
     } = req.body;
 
-    const newExcersiseData = {
+    const exerciseData = {
       name,
       force,
       level,
@@ -151,32 +166,22 @@ const createExcersise = async (req, res) => {
       primaryMuscles,
       instructions,
       category,
-      images
+      images,
+      secondaryMuscles
     };
 
-    if (secondaryMuscles != null) {
-      newExcersiseData.secondaryMuscles = secondaryMuscles;
+    if (id) {
+      exerciseData.id = id;
+    } else {
+      exerciseData.id = name.replace(/ /g, "_");
     }
 
-    const newExcersise = await excersisesService.createExcersise(newExcersiseData);
+    const newExercise = await excersisesService.createExcersise(exerciseData);
 
-    const responseData = {
-      name: newExcersise.name,
-      force: newExcersise.force,
-      level: newExcersise.level,
-      mechanic: newExcersise.mechanic,
-      equipment: newExcersise.equipment,
-      primaryMuscles: newExcersise.primaryMuscles,
-      secondaryMuscles: newExcersise.secondaryMuscles,
-      instructions: newExcersise.instructions,
-      category: newExcersise.category,
-      images: newExcersise.images,
-      id: newExcersise.id,
-    };
-
-    res.status(201).json(responseData);
+    res.status(200).json(newExercise);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Error creating exercise:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -194,4 +199,5 @@ module.exports = {
   getExcersisesByCategory,
   getExcersisesByPrimaryMuscle,
   getExcersisesBySecondaryMuscle,
+  deleteExcersise,
 };

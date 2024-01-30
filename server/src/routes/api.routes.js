@@ -12,6 +12,7 @@ const {
   getExcersisesByMechanic,
   getExcersisesByPrimaryMuscle,
   getExcersisesBySecondaryMuscle,
+  deleteExcersise,
 } = require("../controllers/excerciseController");
 const { auth } = require("../middleware/auth");
 const { authAdmin } = require("../middleware/auth");
@@ -36,5 +37,6 @@ router.get(
   "/getExcersisesBySecondaryMuscle/:secondaryMuscle",
   getExcersisesBySecondaryMuscle
 );
+router.delete("/deleteExcersise/:id", deleteExcersise, auth, authAdmin);
 
 module.exports = router;

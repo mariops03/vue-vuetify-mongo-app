@@ -54,34 +54,13 @@ const getExcersisesBySecondaryMuscle = async (secondaryMuscle) => {
   });
 };
 
-const createExcersise = async (
-  name,
-  force,
-  level,
-  mechanic,
-  equipment,
-  primaryMuscles,
-  secondaryMuscles,
-  instructions,
-  category,
-  images
-) => {
-  const id = name.replace(/ /g, "_");
-  const newExcersise = new Excersises({
-    name,
-    force,
-    level,
-    mechanic,
-    equipment,
-    primaryMuscles,
-    secondaryMuscles,
-    instructions,
-    category,
-    images,
-    id,
-  });
+const deleteExcersise = async (id) => {
+  return await Excersises.findOneAndDelete({ id: id });
+}
 
-  return await newExcersise.save();
+const createExcersise = async (exerciseData) => {
+  const newExercise = new Excersises(exerciseData);
+  return await newExercise.save();
 };
 
 module.exports = {
@@ -97,4 +76,5 @@ module.exports = {
   getExcersisesByCategory,
   getExcersisesByPrimaryMuscle,
   getExcersisesBySecondaryMuscle,
+  deleteExcersise
 };
