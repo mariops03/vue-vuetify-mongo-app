@@ -85,8 +85,7 @@
                 >
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
-                <!-- Confirmación de eliminación -->
-                <v-dialog v-model="dialogDelete" max-width="400">
+                <v-dialog :fullscreen="mobile" v-model="dialogDelete" :max-width="mobile ? 'none' : '400'">
                   <v-card>
                     <v-card-title class="headline">Confirmación</v-card-title>
                     <v-card-text>
@@ -152,10 +151,12 @@ export default {
       imageInterval: null,
       rotationPaused: true,
       dialogDelete: false,
+      mobile: null,
     };
   },
   mounted() {
     this.getUser();
+    this.mobile = this.$vuetify.display.mobile;
   },
   methods: {
     async getUser() {

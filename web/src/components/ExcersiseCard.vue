@@ -2,7 +2,7 @@
   <div class="ma-4">
     <div>
       <v-expand-transition>
-        <v-card style="width: 100%; height: 100%; border-radius: 15px; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: transform .2s;">
+        <v-card style="border-radius: 15px; box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);">
           <div 
             @mouseover="changeImage(1)" 
             @mouseleave="changeImage(0)"

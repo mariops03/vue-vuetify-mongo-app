@@ -15,6 +15,9 @@ export default {
   components: {
     Navbar,
   },
+  mounted(){
+    console.log(this.$vuetify.display.mobile);
+  }
 };
 
 </script>

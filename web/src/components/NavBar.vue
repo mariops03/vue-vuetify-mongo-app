@@ -45,7 +45,7 @@
             <div>Log in</div>
           </div>
         </v-btn>
-        <v-dialog v-model="searchDialog" persistent max-width="600">
+        <v-dialog v-model="searchDialog" :fullscreen="mobile" :max-width="mobile ? 'none' : '600'" persistent>
           <v-card>
             <v-card-title>Buscar ejercicios</v-card-title>
             <v-card-text>
@@ -75,6 +75,7 @@ import { useTheme } from "vuetify";
 import Cookies from "js-cookie";
 import { useRouter } from "vue-router";
 import { useExercisesStore } from "../store/exercises";
+import { useDisplay } from "vuetify";
 
 export default {
   setup() {
@@ -85,6 +86,7 @@ export default {
     const searchDialog = ref(false);
     const searchQuery = ref("");
     const exercisesStore = useExercisesStore();
+    const { mobile } = useDisplay();
 
     const getUser = async () => {
       try {
@@ -184,6 +186,7 @@ export default {
       toggleSearch,
       closeSearchDialog,
       searchExercises,
+      mobile,
     };
   },
 };

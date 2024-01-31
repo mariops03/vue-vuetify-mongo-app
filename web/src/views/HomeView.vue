@@ -2,43 +2,43 @@
   <div class="exercise-container">
     <h1>EJERCICIOS ALEATORIOS</h1>
     <v-container>
-      <div v-if="isLoading">Cargando ejercicios...</div>
-      <v-carousel v-if="!isLoading && exercises.length > 0" hide-delimiters class="mx-auto" style="width: 675px; ">
-        <v-carousel-item
-          v-for="(exercise, index) in exercises"
-          :key="index"
-          reverse-transition="fade-transition"
-          transition="fade-transition"
-        >
-          <router-link :to="`/exercise/${exercise.id}`" class="no-underline" @click="updateCurrentExercise(exercise)">
-            <v-card variant="flat">
-              <v-img
-                v-if="exercise && exercise.images && exercise.images.length"
-                :src="`https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/${exercise.images[0]}`"
-                :alt="exercise.name"
-                height="450px"
-              ></v-img>
-              <v-card-title class="white--text font-weight-bold">{{ exercise.name }}</v-card-title>
-            </v-card>
-          </router-link>
-        </v-carousel-item>
-      </v-carousel>
-      <div v-if="exercises.length === 0 && !isLoading">
-        No hay ejercicios disponibles.
-      </div>
+      <v-row justify="center">
+        <v-col cols="12">
+          <div v-if="isLoading">Cargando ejercicios...</div>
+          <v-carousel v-if="!isLoading && exercises.length > 0" hide-delimiters class="mx-auto" style="max-width: 675px;">
+            <v-carousel-item
+              v-for="(exercise, index) in exercises"
+              :key="index"
+              reverse-transition="fade-transition"
+              transition="fade-transition"
+            >
+              <router-link :to="`/exercise/${exercise.id}`" class="no-underline" @click="updateCurrentExercise(exercise)">
+                <v-card variant="flat">
+                  <v-img
+                    v-if="exercise && exercise.images && exercise.images.length"
+                    :src="`https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/${exercise.images[0]}`"
+                    :alt="exercise.name"
+                    height="450px"
+                  ></v-img>
+                  <v-card-title class="white--text font-weight-bold">{{ exercise.name }}</v-card-title>
+                </v-card>
+              </router-link>
+            </v-carousel-item>
+          </v-carousel>
+          <div v-if="exercises.length === 0 && !isLoading">
+            No hay ejercicios disponibles.
+          </div>
+        </v-col>
+      </v-row>
     </v-container>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import ExcersiseCardVue from "../components/ExcersiseCard.vue";
 import { useExercisesStore } from "../store/exercises";
 
 export default {
-  components: {
-    ExcersiseCardVue,
-  },
   data() {
     return {
       exercises: [],
