@@ -9,6 +9,9 @@
         <v-btn icon @click="toggleSearch">
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
+        <v-btn v-if="user && user.role === 'admin'" icon @click="navigateAddView">
+          <v-icon>mdi-plus-thick</v-icon>
+        </v-btn>
         <v-btn
           icon
           v-if="user && user.role === 'admin'"
@@ -41,9 +44,6 @@
             <v-icon>mdi-account</v-icon>
             <div>Log in</div>
           </div>
-        </v-btn>
-        <v-btn v-if="user && user.role === 'admin'" icon @click="navigateAddView">
-          <v-icon>mdi-plus-thick</v-icon>
         </v-btn>
         <v-dialog v-model="searchDialog" persistent max-width="600">
           <v-card>
