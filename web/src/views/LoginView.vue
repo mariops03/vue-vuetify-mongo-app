@@ -84,7 +84,7 @@ export default {
           userStore.updateUser(data.user);
           setTimeout(() => {
             this.$router.push({ name: "Home" });
-          }, 2000);
+          }, 1500);
         } else {
           this.showLoginMessage(data.message, "error");
         }
