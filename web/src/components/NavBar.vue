@@ -1,69 +1,69 @@
 <template>
-    <v-app>
-      <v-app-bar app color="primary">
-        <v-btn icon @click="navigateHome">
-          <v-icon>mdi-home</v-icon>
-        </v-btn>
-        <v-spacer></v-spacer>
-        <v-btn icon @click="toggleSearch">
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-        <v-btn v-if="user && user.role === 'admin'" icon @click="navigateAddView">
-          <v-icon>mdi-plus-thick</v-icon>
-        </v-btn>
-        <v-btn
-          icon
-          v-if="user && user.role === 'admin'"
-          @click="navigateToSettings"
-        >
-          <v-icon>mdi-cog</v-icon>
-        </v-btn>
+  <v-app>
+    <v-app-bar app color="primary">
+      <v-btn icon @click="navigateHome">
+        <v-icon>mdi-home</v-icon>
+      </v-btn>
+      <v-spacer></v-spacer>
+      <v-btn icon @click="toggleSearch">
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+      <v-btn v-if="user && user.role === 'admin'" icon @click="navigateAddView">
+        <v-icon>mdi-plus-thick</v-icon>
+      </v-btn>
+      <v-btn
+        icon
+        v-if="user && user.role === 'admin'"
+        @click="navigateToSettings"
+      >
+        <v-icon>mdi-cog</v-icon>
+      </v-btn>
 
-        <v-btn icon @click="toggleTheme">
-          <v-icon>{{
-            darkTheme ? "mdi-weather-sunny" : "mdi-weather-night"
-          }}</v-icon>
-        </v-btn>
+      <v-btn icon @click="toggleTheme">
+        <v-icon>{{
+          darkTheme ? "mdi-weather-sunny" : "mdi-weather-night"
+        }}</v-icon>
+      </v-btn>
 
-
-        <v-menu v-if="user">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn text v-bind="attrs" v-on="on">
-              <div class="white--text text-h6 font-weight-bold text-uppercase">
-                {{ user.username }}
-              </div>
-            </v-btn>
-          </template>
-        </v-menu>
-        <v-btn v-if="user" @click="logout" icon>
-          <v-icon>mdi-logout</v-icon>
-        </v-btn>
-        <v-btn text v-else @click="navigateToLogin">
-          <div>
-            <v-icon>mdi-account</v-icon>
-            <div>Log in</div>
-          </div>
-        </v-btn>
-        <v-dialog v-model="searchDialog" :fullscreen="mobile" :max-width="mobile ? 'none' : '600'" persistent>
-          <v-card>
-            <v-card-title>Buscar ejercicios</v-card-title>
-            <v-card-text>
-              <v-text-field
-                v-model="searchQuery"
-                label="Buscar ejercicios"
-                clearable
-                solo-inverted
-              ></v-text-field>
-            </v-card-text>
-            <v-card-actions>
-              <v-btn text @click="searchExercises">Buscar</v-btn>
-              <v-btn text @click="closeSearchDialog">Cancelar</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-app-bar>
-      <router-view></router-view>
-    </v-app>
+      <v-btn text v-if="user">
+        <div class="white--text text-h6 font-weight-bold text-uppercase">
+          {{ user.username }}
+        </div>
+      </v-btn>
+      <v-btn v-if="user" @click="logout" icon>
+        <v-icon>mdi-logout</v-icon>
+      </v-btn>
+      <v-btn text v-else @click="navigateToLogin">
+        <div>
+          <v-icon>mdi-account</v-icon>
+          <div>Log in</div>
+        </div>
+      </v-btn>
+      <v-dialog
+        v-model="searchDialog"
+        :fullscreen="mobile"
+        :max-width="mobile ? 'none' : '600'"
+        persistent
+      >
+        <v-card>
+          <v-card-title>Buscar ejercicios</v-card-title>
+          <v-card-text>
+            <v-text-field
+              v-model="searchQuery"
+              label="Buscar ejercicios"
+              clearable
+              solo-inverted
+            ></v-text-field>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn text @click="searchExercises">Buscar</v-btn>
+            <v-btn text @click="closeSearchDialog">Cancelar</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-app-bar>
+    <router-view></router-view>
+  </v-app>
 </template>
 
 <script>
@@ -84,7 +84,7 @@ export default {
     },
   },
   setup(props) {
-    const user = toRef(props, 'user');
+    const user = toRef(props, "user");
     const theme = useTheme();
     const darkTheme = ref(theme.global.current.value.dark);
     const router = useRouter();

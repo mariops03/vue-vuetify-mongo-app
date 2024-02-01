@@ -18,6 +18,7 @@ const userStore = useUserStore();
 
 const user = computed(() => userStore.getCurrentUser);
 
+
 </script>
 
 <style>

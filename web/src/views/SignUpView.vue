@@ -1,8 +1,7 @@
 <template>
-  <div>
-    <v-container fluid>
+  <v-main>
       <v-row align="center" justify="center">
-        <v-col cols="12" sm="8" md="4">
+        <v-col cols="12" sm="8" md="5">
           <v-card>
             <v-card-title class="text-h6 grey lighten-2 pa-4"
               >Sign Up</v-card-title
@@ -39,10 +38,9 @@
           </v-card>
         </v-col>
       </v-row>
-    </v-container>
 
     <v-row justify="center">
-      <v-col cols="12" sm="8" md="4">
+      <v-col cols="12" sm="8" md="5">
         <div class="text-center text-subtitle-2">
           <router-link to="/login"
             >Already have an account? Click here to login!</router-link
@@ -52,7 +50,7 @@
     </v-row>
 
     <v-row justify="center">
-      <v-col cols="12" sm="8" md="4">
+      <v-col cols="12" sm="8" md="5">
         <v-alert
           v-if="registrationMessage"
           :type="registrationMessageType"
@@ -63,7 +61,7 @@
         </v-alert>
       </v-col>
     </v-row>
-  </div>
+  </v-main>
 </template>
 
 <script>
