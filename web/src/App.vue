@@ -1,24 +1,17 @@
 <template>
   <div>
-    <Navbar />
+    <Navbar v-if="!mobile" />
+    <Sidebar v-else />
   </div>
 </template>
 
-<script>
+<script setup>
 import Navbar from "./components/NavBar.vue";
-export default {
-  data() {
-    return {
-      user: null,
-    };
-  },
-  components: {
-    Navbar,
-  },
-  mounted(){
-    console.log(this.$vuetify.display.mobile);
-  }
-};
+import Sidebar from "./components/SideBar"
+import { useDisplay } from "vuetify";
+
+const { mobile } = useDisplay();
+
 
 </script>
 
