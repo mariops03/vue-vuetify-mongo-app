@@ -79,7 +79,7 @@ import { useRouter } from "vue-router";
 
 export default {
   setup() {
-    const drawer = ref(true);
+    const drawer = ref(false);
     const theme = useTheme();
     const darkTheme = ref(theme.global.current.value.dark);
     const router = useRouter();
