@@ -1,5 +1,5 @@
 <template>
-  <v-main>
+  <v-main class="mt-5">
     <h1>EJERCICIOS ALEATORIOS</h1>
     <v-container>
       <v-row justify="center">
@@ -43,6 +43,7 @@ export default {
     return {
       exercises: [],
       isLoading: false,
+      user: null,
     };
   },
   async mounted() {
@@ -61,11 +62,23 @@ export default {
     } finally {
       this.isLoading = false;
     }
+    this.getUser();
   },
   methods: {
     updateCurrentExercise(exercise) {
       const exerciseStore = useExercisesStore();
       exerciseStore.updateCurrentExercise(exercise);
+    },
+    async getUser() {
+      try {
+        const response = await axios.get("http://localhost:3001/auth/user", {
+          withCredentials: true,
+        });
+        this.user = response.data;
+        console.log(this.user);
+      } catch (error) {
+        console.error("Error al obtener el usuario:", error);
+      }
     },
   }
 };

@@ -67,17 +67,24 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { toRef, ref, onMounted } from "vue";
 import axios from "axios";
 import { useTheme } from "vuetify";
 import Cookies from "js-cookie";
 import { useRouter } from "vue-router";
 import { useExercisesStore } from "../store/exercises";
 import { useDisplay } from "vuetify";
+import { useUserStore } from "../store/user";
 
 export default {
-  setup() {
-    const user = ref(null);
+  props: {
+    user: {
+      type: Object,
+      default: null,
+    },
+  },
+  setup(props) {
+    const user = toRef(props, 'user');
     const theme = useTheme();
     const darkTheme = ref(theme.global.current.value.dark);
     const router = useRouter();
@@ -85,17 +92,6 @@ export default {
     const searchQuery = ref("");
     const exercisesStore = useExercisesStore();
     const { mobile } = useDisplay();
-
-    const getUser = async () => {
-      try {
-        const response = await axios.get("http://localhost:3001/auth/user", {
-          withCredentials: true,
-        });
-        user.value = response.data;
-      } catch (error) {
-        console.error("Error al obtener el usuario:", error);
-      }
-    };
 
     const navigateHome = () => {
       router.push({ name: "Home" });
@@ -122,6 +118,8 @@ export default {
             withCredentials: true,
           }
         );
+        const useStore = useUserStore();
+        useStore.updateUser(null);
         user.value = null;
       } catch (error) {
         console.error("Error al cerrar sesión:", error);
@@ -167,7 +165,6 @@ export default {
         theme.global.name.value = themeFromCookie;
         darkTheme.value = theme.global.current.value.dark;
       }
-      getUser();
     });
 
     return {

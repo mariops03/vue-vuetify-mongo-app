@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <Navbar v-if="!mobile" />
-    <Sidebar v-else />
+    <Navbar v-if="!mobile" :user="user" />
+    <Sidebar v-else :user="user" />
   </v-app>
 </template>
 
@@ -9,9 +9,14 @@
 import Navbar from "./components/NavBar.vue";
 import Sidebar from "./components/SideBar"
 import { useDisplay } from "vuetify";
+import { useUserStore } from "./store/user";
+import { computed } from "vue";
 
 const { mobile } = useDisplay();
 
+const userStore = useUserStore();
+
+const user = computed(() => userStore.getCurrentUser);
 
 </script>
 

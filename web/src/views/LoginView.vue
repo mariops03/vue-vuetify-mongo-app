@@ -52,6 +52,9 @@
 </template>
 
 <script>
+
+import { useUserStore } from '../store/user';
+
 export default {
   data() {
     return {
@@ -80,7 +83,14 @@ export default {
 
         if (data.success) {
           this.showLoginMessage(data.message, "success");
-          this.$router.push({ name: "Home" });
+          const userStore = useUserStore();
+          userStore.updateUser(data.user);
+          console.log("User:", data.user);
+          setTimeout(() => {
+            this.$router.push({ name: "Home" });
+          }, 2000);
+          
+
         } else {
           this.showLoginMessage(data.message, "error");
         }

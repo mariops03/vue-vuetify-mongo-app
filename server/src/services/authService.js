@@ -7,7 +7,10 @@ const signUp = async (username, email, password) => {
     const existingUser = await User.findOne({ username });
 
     if (existingUser) {
-      return { success: false, message: "El nombre de usuario ya está en uso." };
+      return {
+        success: false,
+        message: "El nombre de usuario ya está en uso.",
+      };
     } else {
       const hash = await bcrypt.hash(password, 10);
 
@@ -55,7 +58,17 @@ const login = async (username, password) => {
           "GARNACHO",
           { expiresIn: "30m" }
         );
-        return { success: true, message: "Inicio de sesión exitoso", token };
+        return {
+          success: true,
+          message: "Inicio de sesión exitoso",
+          token,
+          user: {
+            _id: user._id,
+            username: user.username,
+            email: user.email,
+            role: user.role,
+          },
+        };
       } else {
         return { success: false, message: "Credenciales incorrectas" };
       }

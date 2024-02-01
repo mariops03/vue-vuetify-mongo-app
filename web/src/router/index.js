@@ -84,11 +84,11 @@ router.beforeEach(async (to, from, next) => {
           next();
         } else {
           console.error("No tiene los permisos necesarios");
-          router.replace({ name: "Home" });
+          next(false)
         }
       } catch (error) {
         console.error("Error al verificar la autenticación:", error);
-        router.replace({ name: "Login" });
+        next(false)
       }
     } else if (to.meta.requiresAuth === false) {
       try {
@@ -96,7 +96,7 @@ router.beforeEach(async (to, from, next) => {
           withCredentials: true,
         });
         if (response.data) {
-          router.replace({ name: "Home" });
+          next(false)
         } else {
           next();
         }
