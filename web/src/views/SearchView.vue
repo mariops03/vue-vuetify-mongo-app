@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <v-main>
         <h1>{{ query.toUpperCase() }}</h1>
     
         <div class="exercise-container">
@@ -14,7 +14,7 @@
                 </div>
             </v-container>
         </div>
-    </div>
+    </v-main>
 </template>
 
 <script>

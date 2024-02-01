@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <v-app>
     <Navbar v-if="!mobile" />
     <Sidebar v-else />
-  </div>
+  </v-app>
 </template>
 
 <script setup>
@@ -22,7 +22,7 @@ const { mobile } = useDisplay();
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 15px;
+
 }
 
 .remove-top-margin {

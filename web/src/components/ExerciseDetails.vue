@@ -1,7 +1,7 @@
 <template>
-  <v-container>
+  <v-main>
     <v-row v-if="exercise" justify="center">
-      <v-col cols="12" sm="10" md="8" lg="6">
+      <v-col cols="12" sm="10" md="8" >
         <v-card>
           <v-card-title
             class="font-weight-bold ma-4"
@@ -9,8 +9,12 @@
             >{{ exercise.name }}</v-card-title
           >
           <v-row class="ma-4" justify="center">
-            <v-col cols="12" md="7" >
-              <v-img :src="currentImage" aspect-ratio="1.5" align-center ></v-img>
+            <v-col cols="12" md="7">
+              <v-img
+                :src="currentImage"
+                aspect-ratio="1.5"
+                align-center
+              ></v-img>
             </v-col>
 
             <v-col cols="12" md="5">
@@ -85,7 +89,11 @@
                 >
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
-                <v-dialog :fullscreen="mobile" v-model="dialogDelete" :max-width="mobile ? 'none' : '400'">
+                <v-dialog
+                  :fullscreen="mobile"
+                  v-model="dialogDelete"
+                  :max-width="mobile ? 'none' : '400'"
+                >
                   <v-card>
                     <v-card-title class="headline">Confirmación</v-card-title>
                     <v-card-text>
@@ -114,7 +122,7 @@
       </v-col>
     </v-row>
     <v-row v-if="exercise" justify="center">
-      <v-col cols="12" sm="10" md="8" lg="6">
+      <v-col cols="12" sm="10" md="8">
         <v-card>
           <v-card-title
             class="font-weight-bold ma-4"
@@ -136,7 +144,7 @@
       </v-col>
     </v-row>
     <v-alert v-else type="error">Acceso denegado</v-alert>
-  </v-container>
+  </v-main>
 </template>
 
 <script>
@@ -194,9 +202,12 @@ export default {
     },
     async deleteExerciseConfirmed() {
       try {
-        const response = await axios.delete(`http://localhost:3001/api/v1/deleteExcersise/${this.exercise.id}`, {
-          withCredentials: true,
-        });
+        const response = await axios.delete(
+          `http://localhost:3001/api/v1/deleteExcersise/${this.exercise.id}`,
+          {
+            withCredentials: true,
+          }
+        );
         if (response.status === 200) {
           this.$router.push({ name: "Home" });
         } else {
@@ -205,7 +216,7 @@ export default {
       } catch (error) {
         console.error("Error al eliminar el ejercicio:", error);
       }
-      this.dialogDelete = false; 
+      this.dialogDelete = false;
     },
   },
   computed: {

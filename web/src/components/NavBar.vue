@@ -1,5 +1,4 @@
 <template>
-  <v-app>
     <v-main>
       <v-app-bar app color="primary">
         <v-btn icon @click="navigateHome">
@@ -65,7 +64,6 @@
       </v-app-bar>
       <router-view></router-view>
     </v-main>
-  </v-app>
 </template>
 
 <script>

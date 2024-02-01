@@ -1,10 +1,9 @@
 <template>
-  <v-app>
-    <v-main>
+  <v-main>
     <v-app-bar app color="primary">
       <v-app-bar-nav-icon @click.stop="toggleDrawer"></v-app-bar-nav-icon>
     </v-app-bar>
-    <v-navigation-drawer v-model="drawer" @input="drawer = $event">
+    <v-navigation-drawer v-model="drawer" @input="drawer = $event" :width="220">
       <v-list>
         <v-list-item @click="navigateHome">
           <v-list-item-icon>
@@ -66,8 +65,7 @@
       </v-list>
     </v-navigation-drawer>
     <router-view></router-view>
-    </v-main>
-  </v-app>
+  </v-main>
 </template>
 
 <script>

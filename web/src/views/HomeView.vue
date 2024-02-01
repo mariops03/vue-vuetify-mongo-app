@@ -1,11 +1,11 @@
 <template>
-  <div class="exercise-container">
+  <v-main>
     <h1>EJERCICIOS ALEATORIOS</h1>
     <v-container>
       <v-row justify="center">
         <v-col cols="12">
           <div v-if="isLoading">Cargando ejercicios...</div>
-          <v-carousel v-if="!isLoading && exercises.length > 0" hide-delimiters class="mx-auto" style="max-width: 675px;">
+          <v-carousel v-if="!isLoading && exercises.length > 0" hide-delimiters class="mx-auto" style="max-width: 675px; height: auto;">
             <v-carousel-item
               v-for="(exercise, index) in exercises"
               :key="index"
@@ -31,7 +31,7 @@
         </v-col>
       </v-row>
     </v-container>
-  </div>
+  </v-main>
 </template>
 
 <script>
