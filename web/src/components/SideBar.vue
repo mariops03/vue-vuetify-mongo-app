@@ -1,5 +1,5 @@
 <template>
-  <v-main>
+  <v-app>
     <v-app-bar app color="primary">
       <v-app-bar-nav-icon @click.stop="toggleDrawer"></v-app-bar-nav-icon>
     </v-app-bar>
@@ -65,7 +65,7 @@
       </v-list>
     </v-navigation-drawer>
     <router-view></router-view>
-  </v-main>
+  </v-app>
 </template>
 
 <script>

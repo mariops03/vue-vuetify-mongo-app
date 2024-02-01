@@ -1,7 +1,6 @@
 <template>
-    <v-main>
-        <h1>{{ query.toUpperCase() }}</h1>
-    
+    <v-main class="mt-5">
+        <h1>{{ query.toUpperCase() }}</h1> 
         <div class="exercise-container">
             <v-container>
                 <v-row>

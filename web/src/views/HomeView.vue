@@ -72,10 +72,6 @@ export default {
 </script>
 
 <style scoped>
-.exercise-container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
 
 .no-underline {
   text-decoration: none !important;

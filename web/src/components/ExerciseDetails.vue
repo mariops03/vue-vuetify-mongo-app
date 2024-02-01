@@ -2,7 +2,7 @@
   <v-main>
     <v-row v-if="exercise" justify="center">
       <v-col cols="12" sm="10" md="8" >
-        <v-card>
+        <v-card class="mt-5">
           <v-card-title
             class="font-weight-bold ma-4"
             style="font-size: xx-large"

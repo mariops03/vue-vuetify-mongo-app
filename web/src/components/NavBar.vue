@@ -1,5 +1,5 @@
 <template>
-    <v-main>
+    <v-app>
       <v-app-bar app color="primary">
         <v-btn icon @click="navigateHome">
           <v-icon>mdi-home</v-icon>
@@ -63,7 +63,7 @@
         </v-dialog>
       </v-app-bar>
       <router-view></router-view>
-    </v-main>
+    </v-app>
 </template>
 
 <script>
