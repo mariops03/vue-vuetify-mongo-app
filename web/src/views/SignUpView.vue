@@ -1,44 +1,43 @@
 <template>
   <v-main>
-      <v-row align="center" justify="center">
-        <v-col cols="12" sm="8" md="5">
-          <v-card>
-            <v-card-title class="text-h6 grey lighten-2 pa-4"
-              >Sign Up</v-card-title
-            >
-            <v-card-text>
-              <v-form @submit.prevent="register">
-                <v-text-field
-                  v-model="username"
-                  label="Username"
-                  :rules="usernameRules"
-                  required
-                ></v-text-field>
-                <v-text-field
-                  v-model="email"
-                  label="Email"
-                  type="email"
-                  :rules="emailRules"
-                  outlined
-                  required
-                ></v-text-field>
-                <v-text-field
-                  v-model="password"
-                  label="Password"
-                  type="password"
-                  :rules="passwordRules"
-                  outlined
-                  required
-                ></v-text-field>
-                <v-btn type="submit" color="success" class="mr-4" block>
-                  Register
-                </v-btn>
-              </v-form>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-
+    <v-row align="center" justify="center">
+      <v-col cols="12" sm="8" md="5">
+        <v-card class="mt-10">
+          <v-card-title class="text-h6 grey lighten-2 pa-4"
+            >Sign Up</v-card-title
+          >
+          <v-card-text>
+            <v-form @submit.prevent="register">
+              <v-text-field
+                v-model="username"
+                label="Username"
+                :rules="usernameRules"
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="email"
+                label="Email"
+                type="email"
+                :rules="emailRules"
+                outlined
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="password"
+                label="Password"
+                type="password"
+                :rules="passwordRules"
+                outlined
+                required
+              ></v-text-field>
+              <v-btn type="submit" color="success" class="mr-4" block>
+                Register
+              </v-btn>
+            </v-form>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
     <v-row justify="center">
       <v-col cols="12" sm="8" md="5">
         <div class="text-center text-subtitle-2">
@@ -48,7 +47,6 @@
         </div>
       </v-col>
     </v-row>
-
     <v-row justify="center">
       <v-col cols="12" sm="8" md="5">
         <v-alert

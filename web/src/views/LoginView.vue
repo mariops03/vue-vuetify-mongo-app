@@ -1,36 +1,36 @@
 <template>
   <v-main>
-      <v-row align="center" justify="center">
-        <v-col cols="12" sm="8" md="5">
-          <v-card class="mt-10">
-            <v-card-title class="text-h6 grey pa-4">Login</v-card-title>
-            <v-card-text>
-              <v-form @submit.prevent="login">
-                <v-text-field
-                  v-model="username"
-                  label="Username"
-                  outlined
-                  required
-                ></v-text-field>
-
-                <v-text-field
-                  v-model="password"
-                  label="Password"
-                  type="password"
-                  outlined
-                  required
-                ></v-text-field>
-
-                <v-btn type="submit" color="primary" class="mr-4">Login</v-btn>
-              </v-form>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
+    <v-row align="center" justify="center">
+      <v-col cols="12" sm="8" md="5">
+        <v-card class="mt-10">
+          <v-card-title class="text-h6 grey pa-4">Login</v-card-title>
+          <v-card-text>
+            <v-form @submit.prevent="login">
+              <v-text-field
+                v-model="username"
+                label="Username"
+                outlined
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="password"
+                label="Password"
+                type="password"
+                outlined
+                required
+              ></v-text-field>
+              <v-btn type="submit" color="primary" class="mr-4">Login</v-btn>
+            </v-form>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
     <v-row justify="center">
       <v-col cols="12" sm="8" md="5">
         <div class="text-center text-subtitle-2">
-          <router-link to="/signup">¿No tienes cuenta? Haz click para crear una!</router-link>
+          <router-link to="/signup"
+            >¿No tienes cuenta? Haz click para crear una!</router-link
+          >
         </div>
       </v-col>
     </v-row>
@@ -50,8 +50,7 @@
 </template>
 
 <script>
-
-import { useUserStore } from '../store/user';
+import { useUserStore } from "../store/user";
 
 export default {
   data() {
@@ -86,8 +85,6 @@ export default {
           setTimeout(() => {
             this.$router.push({ name: "Home" });
           }, 2000);
-          
-
         } else {
           this.showLoginMessage(data.message, "error");
         }
