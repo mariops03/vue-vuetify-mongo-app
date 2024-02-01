@@ -85,7 +85,6 @@ export default {
           this.showLoginMessage(data.message, "success");
           const userStore = useUserStore();
           userStore.updateUser(data.user);
-          console.log("User:", data.user);
           setTimeout(() => {
             this.$router.push({ name: "Home" });
           }, 2000);

@@ -69,30 +69,29 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { toRef, ref, onMounted } from "vue";
 import axios from "axios";
 import { useTheme } from "vuetify";
 import Cookies from "js-cookie";
 import { useRouter } from "vue-router";
+import { useUserStore } from "../store/user";
 
 export default {
-  setup() {
+  props: {
+    user: {
+      type: Object,
+      default: null,
+    },
+  },
+  setup(props) {
     const drawer = ref(false);
     const theme = useTheme();
     const darkTheme = ref(theme.global.current.value.dark);
     const router = useRouter();
-    const user = ref(null);
+    const user = toRef(props, 'user');
+    const useStore = useUserStore();
 
-    const getUser = async () => {
-      try {
-        const response = await axios.get("http://localhost:3001/auth/user", {
-          withCredentials: true,
-        });
-        user.value = response.data;
-      } catch (error) {
-        console.error("Error al obtener el usuario:", error);
-      }
-    };
+    console.log("user", user);
 
     const toggleDrawer = () => {
       console.log("toggleDrawer");
@@ -126,7 +125,8 @@ export default {
           {},
           { withCredentials: true }
         );
-        props.user = null;
+        useStore.updateUser(null);
+        user.value = null;
       } catch (error) {
         console.error("Error al cerrar sesión:", error);
       }
@@ -150,7 +150,6 @@ export default {
         theme.global.name.value = themeFromCookie;
         darkTheme.value = theme.global.current.value.dark;
       }
-      getUser();
     });
 
     return {
