@@ -8,19 +8,8 @@
       <v-btn icon @click="toggleSearch">
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
-      <v-btn
-      v-if="user && user.role === 'admin'"
-        icon
-        @click="navigateAddView"
-      >
+      <v-btn v-if="user && user.role === 'admin'" icon @click="navigateAddView">
         <v-icon>mdi-plus-thick</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        v-if="user && user.role === 'admin'"
-        @click="navigateToSettings"
-      >
-        <v-icon>mdi-cog</v-icon>
       </v-btn>
 
       <v-btn icon @click="toggleTheme">
@@ -29,20 +18,41 @@
         }}</v-icon>
       </v-btn>
 
-      <v-btn v-if="user">
+      <v-menu v-if="user" open-on-hover>
+    <template v-slot:activator="{ props }">
+      <v-btn v-bind="props">
         <div class="white--text text-h6 font-weight-bold text-uppercase">
           {{ user.username }}
         </div>
       </v-btn>
-      <v-btn v-if="user" icon @click="logout">
-        <v-icon>mdi-logout</v-icon>
-      </v-btn>
+    </template>
+    <v-list>
+      <v-list-item @click="navigateToSettings">
+        <v-list-item-content class="d-flex align-center">
+          <v-list-item-icon>
+            <v-icon class="mr-2">mdi-cog</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title> Ajustes</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-list-item @click="logout">
+        <v-list-item-content class="d-flex align-center">
+          <v-list-item-icon>
+            <v-icon class="mr-2">mdi-logout</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Cerrar sesión</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
+  </v-menu>
+
       <v-btn text v-else @click="navigateToLogin">
         <div>
           <v-icon>mdi-account</v-icon>
           <div>Log in</div>
         </div>
       </v-btn>
+
       <v-dialog
         v-model="searchDialog"
         :fullscreen="mobile"
@@ -96,6 +106,7 @@ export default {
     const searchQuery = ref("");
     const exercisesStore = useExercisesStore();
     const { mobile } = useDisplay();
+    const useStore = useUserStore();
 
     const navigateHome = () => {
       router.push({ name: "Home" });
@@ -114,6 +125,8 @@ export default {
     };
 
     const logout = async () => {
+      useStore.updateUser(null);
+      user.value = null;
       try {
         await axios.post(
           "http://localhost:3001/auth/logout",
@@ -122,9 +135,8 @@ export default {
             withCredentials: true,
           }
         );
-        const useStore = useUserStore();
-        useStore.updateUser(null);
-        user.value = null;
+
+        console.log("User: ", user.value);
       } catch (error) {
         console.error("Error al cerrar sesión:", error);
       }

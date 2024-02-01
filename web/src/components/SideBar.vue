@@ -119,14 +119,15 @@ export default {
     };
 
     const logout = async () => {
+      useStore.updateUser(null);
+      user.value = null;
       try {
         await axios.post(
           "http://localhost:3001/auth/logout",
           {},
           { withCredentials: true }
         );
-        useStore.updateUser(null);
-        user.value = null;
+        console.log(`Ha cerrado sesion el usuario ${user}`);
       } catch (error) {
         console.error("Error al cerrar sesión:", error);
       }
