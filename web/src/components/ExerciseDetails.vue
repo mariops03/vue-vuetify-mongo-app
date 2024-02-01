@@ -8,12 +8,12 @@
             style="font-size: xx-large"
             >{{ exercise.name }}</v-card-title
           >
-          <v-row class="ma-4">
-            <v-col cols="12" md="6">
-              <v-img :src="currentImage" aspect-ratio="1.5"></v-img>
+          <v-row class="ma-4" justify="center">
+            <v-col cols="12" md="7" >
+              <v-img :src="currentImage" aspect-ratio="1.5" align-center ></v-img>
             </v-col>
 
-            <v-col cols="12" md="6">
+            <v-col cols="12" md="5">
               <div class="details">
                 <div class="difficulty">
                   <strong class="mr-1">Level:</strong>

@@ -5,7 +5,7 @@
         <div class="exercise-container">
             <v-container>
                 <v-row>
-                    <v-col cols="12" md="6" lg="4" v-for="exercise in exercises" :key="exercise.id">
+                    <v-col cols="12" sm="6" lg="4" v-for="exercise in exercises" :key="exercise.id">
                         <ExcersiseCard :exercise="exercise" />
                     </v-col>
                 </v-row>
