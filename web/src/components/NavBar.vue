@@ -8,7 +8,11 @@
       <v-btn icon @click="toggleSearch">
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
-      <v-btn v-if="user && user.role === 'admin'" icon @click="navigateAddView">
+      <v-btn
+      v-if="user && user.role === 'admin'"
+        icon
+        @click="navigateAddView"
+      >
         <v-icon>mdi-plus-thick</v-icon>
       </v-btn>
       <v-btn
@@ -25,12 +29,12 @@
         }}</v-icon>
       </v-btn>
 
-      <v-btn text v-if="user">
+      <v-btn v-if="user">
         <div class="white--text text-h6 font-weight-bold text-uppercase">
           {{ user.username }}
         </div>
       </v-btn>
-      <v-btn v-if="user" @click="logout" icon>
+      <v-btn v-if="user" icon @click="logout">
         <v-icon>mdi-logout</v-icon>
       </v-btn>
       <v-btn text v-else @click="navigateToLogin">

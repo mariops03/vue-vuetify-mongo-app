@@ -3,7 +3,7 @@
     <v-app-bar app color="primary">
       <v-app-bar-nav-icon @click.stop="toggleDrawer"></v-app-bar-nav-icon>
     </v-app-bar>
-    <v-navigation-drawer v-model="drawer" @input="drawer = $event" :width="220">
+    <v-navigation-drawer v-model="drawer" @input="drawer = $event" :width="180">
       <v-list>
         <v-list-item @click="navigateHome">
           <v-list-item-icon>
