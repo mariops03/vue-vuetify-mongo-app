@@ -27,7 +27,7 @@
       </v-btn>
     </template>
     <v-list>
-      <v-list-item @click="navigateToSettings">
+      <v-list-item v-if="user.role === 'admin'" @click="navigateToSettings">
         <v-list-item-content class="d-flex align-center">
           <v-list-item-icon>
             <v-icon class="mr-2">mdi-cog</v-icon>

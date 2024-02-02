@@ -33,7 +33,9 @@ const signUp = async (username, email, password) => {
         { expiresIn: "30m" }
       );
 
-      return { success: true, message: "Usuario registrado con éxito.", token };
+      return { success: true, message: "Usuario registrado con éxito.", token, 
+      user: { _id: newUser._id, username: newUser.username, email: newUser.email, role: newUser.role },
+      };
     }
   } catch (error) {
     console.error("Error durante el registro:", error);

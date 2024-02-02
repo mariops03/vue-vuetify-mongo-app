@@ -7,7 +7,7 @@
             >Sign Up</v-card-title
           >
           <v-card-text>
-            <v-form @submit.prevent="register">
+            <v-form @submit.prevent="register" ref="form">
               <v-text-field
                 v-model="username"
                 label="Username"
@@ -63,6 +63,8 @@
 </template>
 
 <script>
+import { useUserStore } from "../store/user";
+
 export default {
   data() {
     return {
@@ -71,45 +73,75 @@ export default {
       password: "",
       registrationMessage: "",
       registrationMessageType: "",
-      usernameRules: [(v) => !!v || "El nombre de usuario es requerido"],
+      usernameRules: [
+        (v) => {
+          const isValid = !!v;
+          console.log(`Username validation: ${isValid}`);
+          return isValid || "El nombre de usuario es requerido";
+        },
+      ],
       emailRules: [
-        (v) => !!v || "El correo electrónico es requerido",
-        (v) => /.+@.+\..+/.test(v) || "El correo electrónico debe ser válido",
+        (v) => {
+          const isValid = !!v;
+          console.log(`Email presence validation: ${isValid}`);
+          return isValid || "El correo electrónico es requerido";
+        },
+        (v) => {
+          const isValid = /.+@.+\..+/.test(v);
+          console.log(`Email format validation: ${isValid}`);
+          return isValid || "El correo electrónico debe ser válido";
+        },
       ],
       passwordRules: [
-        (v) => !!v || "La contraseña es requerida",
-        (v) =>
-          (v && v.length >= 8) ||
-          "La contraseña debe tener al menos 8 caracteres",
+        (v) => {
+          const isValid = !!v;
+          console.log(`Password presence validation: ${isValid}`);
+          return isValid || "La contraseña es requerida";
+        },
+        (v) => {
+          const isValid = v && v.length >= 8;
+          console.log(`Password length validation: ${isValid}`);
+          return isValid || "La contraseña debe tener al menos 8 caracteres";
+        },
       ],
     };
   },
   methods: {
     async register() {
-      try {
-        const response = await fetch("http://localhost:3001/auth/signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: this.username,
-            email: this.email,
-            password: this.password,
-          }),
-        });
+      const isValid = await this.$refs.form.validate();
+      if (isValid.valid) {
+        try {
+          const response = await fetch("http://localhost:3001/auth/signup", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: this.username,
+              email: this.email,
+              password: this.password,
+            }),
+          });
 
-        const data = await response.json();
+          const data = await response.json();
 
-        if (data.success) {
-          this.showRegistrationMessage(data.message, "success");
-          this.$router.push({ name: "Home" });
-        } else {
-          this.showRegistrationMessage(data.message, "error");
+          if (data.success) {
+            const userStore = useUserStore();
+            userStore.updateUser(data.user);
+            this.showRegistrationMessage(data.message, "success");
+            this.$router.push({ name: "Home" });
+          } else {
+            this.showRegistrationMessage(data.message, "error");
+          }
+        } catch (error) {
+          console.error("Error during registration:", error);
+          this.showRegistrationMessage("Internal server error", "error");
         }
-      } catch (error) {
-        console.error("Error during registration:", error);
-        this.showRegistrationMessage("Internal server error", "error");
+      } else {
+        this.showRegistrationMessage(
+          "Please fill out the form correctly",
+          "error"
+        );
       }
     },
     showRegistrationMessage(message, type) {
